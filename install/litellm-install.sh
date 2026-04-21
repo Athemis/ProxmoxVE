@@ -31,6 +31,8 @@ $STD /opt/litellm/.venv/bin/python -m ensurepip --upgrade
 $STD /opt/litellm/.venv/bin/python -m pip install --upgrade pip
 $STD /opt/litellm/.venv/bin/python -m pip install litellm[proxy] prisma
 
+VENV_PATH="/opt/litellm/.venv"
+
 SCHEMA_PATH="$(find /opt/litellm/.venv/lib \( \
   -path '*/site-packages/litellm_proxy_extras/schema.prisma' -o \
   -path '*/site-packages/litellm/proxy/schema.prisma' \
