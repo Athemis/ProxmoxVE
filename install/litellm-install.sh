@@ -43,7 +43,6 @@ fi
 
 $STD /opt/litellm/.venv/bin/prisma generate --schema "$SCHEMA_PATH"
 
-$STD /opt/litellm/.venv/bin/prisma generate --schema "$SCHEMA_PATH"
 msg_ok "Installed LiteLLM"
 
 msg_info "Configuring LiteLLM"
