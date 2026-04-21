@@ -30,7 +30,28 @@ $STD uv venv --clear /opt/litellm/.venv
 $STD /opt/litellm/.venv/bin/python -m ensurepip --upgrade
 $STD /opt/litellm/.venv/bin/python -m pip install --upgrade pip
 $STD /opt/litellm/.venv/bin/python -m pip install litellm[proxy] prisma
-$STD /opt/litellm/.venv/bin/prisma generate
+SCHEMA_PATH=$(/opt/litellm/.venv/bin/python - <<'PY'
+import sysconfig
+from pathlib import Path
+import sys
+
+purelib = Path(sysconfig.get_paths()["purelib"])
+candidates = [
+    purelib / "litellm_proxy_extras" / "schema.prisma",
+    purelib / "litellm" / "proxy" / "schema.prisma",
+]
+
+for path in candidates:
+    if path.exists():
+        print(path)
+        raise SystemExit(0)
+
+print("Could not locate LiteLLM Prisma schema in site-packages", file=sys.stderr)
+raise SystemExit(1)
+PY
+)
+
+$STD /opt/litellm/.venv/bin/prisma generate --schema "$SCHEMA_PATH"
 msg_ok "Installed LiteLLM"
 
 msg_info "Configuring LiteLLM"
