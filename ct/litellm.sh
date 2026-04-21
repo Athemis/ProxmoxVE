@@ -41,11 +41,6 @@ function update_script() {
 
   SCHEMA_PATH=$("$VENV_PATH/bin/python" -c 'import sysconfig; from pathlib import Path; purelib = Path(sysconfig.get_paths()["purelib"]); candidates = [purelib / "litellm_proxy_extras" / "schema.prisma", purelib / "litellm" / "proxy" / "schema.prisma"]; print(next(str(p) for p in candidates if p.exists()))')
 
-  print("Could not locate LiteLLM Prisma schema in site-packages", file=sys.stderr)
-  raise SystemExit(1)
-  PY
-  )
-
   $STD "$VENV_PATH/bin/prisma" generate --schema "$SCHEMA_PATH"
   msg_ok "LiteLLM updated"
 
