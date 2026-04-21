@@ -41,6 +41,9 @@ if [[ -z "$SCHEMA_PATH" ]]; then
   exit 1
 fi
 
+export PATH="$VENV_PATH/bin:$PATH"
+source "$VENV_PATH/bin/activate"
+
 $STD /opt/litellm/.venv/bin/prisma generate --schema "$SCHEMA_PATH"
 
 msg_ok "Installed LiteLLM"
